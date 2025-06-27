@@ -1,7 +1,7 @@
-@use 'styles' as *;
-@use 'styles/reset.scss';
-@use 'styles/fonts.scss';
-@use 'styles/breakpoints.scss' as breakpoints;
+@use "styles" as *;
+@use "styles/reset.scss";
+@use "styles/fonts.scss";
+@use "styles/breakpoints.scss" as breakpoints;
 
 body {
   margin: 0;
@@ -10,7 +10,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   background-color: #f0f2f5;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .container {

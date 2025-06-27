@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import Close from '../assets/icons/close.svg?react';
-import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
-import { Modal } from '../Modal/Modal';
-import './style.scss';
+import classNames from "classnames";
+import Close from "../../assets/icons/close.svg?react";
+import { Button } from "../../shared/ui/Button";
+import { Input } from "../../shared/ui/Input";
+import { Modal } from "../../shared/ui/Modal";
+import "./style.scss";
 
 export const AddEditTaskModal = () => {
   return (
@@ -24,7 +24,7 @@ export const AddEditTaskModal = () => {
           <div className="modal-priority">
             <span>Приортитет</span>
             <ul className="priority-buttons">
-              {['high', 'medium', 'low'].map((priority) => (
+              {["high", "medium", "low"].map((priority) => (
                 <li
                   key={priority}
                   className={classNames(`${priority}-selected`, priority)}

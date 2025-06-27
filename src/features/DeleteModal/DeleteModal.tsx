@@ -1,6 +1,6 @@
-import { Button } from '../Button/Button';
-import { Modal } from '../Modal/Modal';
-import './style.scss';
+import { Button } from "../../shared/ui/Button";
+import { Modal } from "../../shared/ui/Modal";
+import "./style.scss";
 
 export const DeleteModal = () => {
   return (

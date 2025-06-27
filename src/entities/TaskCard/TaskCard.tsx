@@ -1,8 +1,8 @@
-import classNames from 'classnames';
-import DeleteIcon from '../assets/icons/delete.svg?react';
-import EditIcon from '../assets/icons/edit.svg?react';
-import { CircularProgressBar } from '../CircularProgressBar/CircularProgressBar';
-import './style.scss';
+import classNames from "classnames";
+import DeleteIcon from "../../assets/icons/delete.svg?react";
+import EditIcon from "../../assets/icons/edit.svg?react";
+import { CircularProgressBar } from "../../shared/ui/CircularProgressBar";
+import "./style.scss";
 
 export const TaskCard = ({
   task: { id, title, priority, status, progress },
@@ -15,12 +15,12 @@ export const TaskCard = ({
       </div>
       <div className="flex">
         <span className="priority-title">Приоритет</span>
-        <span className={classNames(`priority--${priority}`, 'priority')}>
+        <span className={classNames(`priority--${priority}`, "priority")}>
           {priority}
         </span>
       </div>
       <div className="task-status-wrapper">
-        <button className={classNames(`status--${status}`, 'status')}>
+        <button className={classNames(`status--${status}`, "status")}>
           {status}
         </button>
       </div>
