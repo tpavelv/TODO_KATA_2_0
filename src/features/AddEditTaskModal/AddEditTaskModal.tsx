@@ -3,16 +3,18 @@ import Close from "../../assets/icons/close.svg?react";
 import { Button } from "../../shared/ui/Button";
 import { Input } from "../../shared/ui/Input";
 import { Modal } from "../../shared/ui/Modal";
+import { PriorityLabels } from "../../app/types";
 import "./style.scss";
 
-export const AddEditTaskModal = ({ close }) => {
+export const AddEditTaskModal = ({ closeModal, mode }) => {
+  const title = mode === "add" ? "Добавить" : "Редактировать";
   return (
     <Modal>
       <form>
         <div className="add-edit-modal">
           <div className="flx-between">
-            <span className="modal-title">Добавить задачу</span>
-            <Close className="cp" onClick={close} />
+            <span className="modal-title">{`${title} задачу`}</span>
+            <Close className="cp" onClick={closeModal} />
           </div>
           <Input
             label="Задача"
@@ -29,13 +31,18 @@ export const AddEditTaskModal = ({ close }) => {
                   key={priority}
                   className={classNames(`${priority}-selected`, priority)}
                 >
-                  {priority}
+                  {PriorityLabels[priority]}
                 </li>
               ))}
             </ul>
           </div>
           <div className="flx-right mt-50">
-            <Button title="Добавить" onClick={() => {}} />
+            <Button
+              title={title}
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            />
           </div>
         </div>
       </form>

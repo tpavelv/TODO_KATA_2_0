@@ -8,52 +8,42 @@ import { taskList } from "../../app/serverData/taskList";
 import { useState } from "react";
 
 export const TodoList = () => {
-  // const tasks;
+  type ModalName = "AddModal" | "EditModal" | "DeleteModal";
+  type Mode = "add" | "edit" | null;
 
-  type ModalName = "AddEditModal" | "showDeleteModal";
   const [showAddEditModal, setShowAddEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [modeAddEditModal, setModeAddEditModal] = useState<Mode>(null);
 
-  // const setModalVisibility = (name, visible: boolean) => {
-  //   switch (name) {
-  //     case "AddEditModal":
-  //       setShowAddEditModal(visible);
-  //       break;
-  //     case "showDeleteModal":
-  //       setShowDeleteModal(visible);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
+  const setModalVisibility = (name: ModalName, visible: boolean) => {
+    switch (name) {
+      case "AddModal":
+        if (modeAddEditModal !== "add") {
+          setModeAddEditModal("add");
+        }
 
-  const closeModal = (nameModal: string) => {
-    switch (nameModal) {
-      case "AddEditModal":
-        setShowAddEditModal(false);
+        setShowAddEditModal(visible);
+
         break;
-      case "showDeleteModal":
-        setShowDeleteModal(false);
+
+      case "EditModal":
+        if (modeAddEditModal !== "edit") {
+          setModeAddEditModal("edit");
+        }
+
+        setShowAddEditModal(visible);
+        break;
+
+      case "DeleteModal":
+        setShowDeleteModal(visible);
         break;
       default:
         break;
     }
   };
+  const showModal = (name: ModalName) => setModalVisibility(name, true);
+  const closeModal = (name: ModalName) => setModalVisibility(name, false);
 
-  const showModal = (nameModal: string) => {
-    switch (nameModal) {
-      case "AddEditModal":
-        setShowAddEditModal(true);
-        break;
-      case "showDeleteModal":
-        setShowDeleteModal(true);
-        break;
-      default:
-        break;
-    }
-  };
-
-  console.log(taskList);
   return (
     <>
       <div className="page-wrapper">
@@ -62,17 +52,31 @@ export const TodoList = () => {
           <Button
             title="Добавить задачу"
             icon={<Add />}
-            onClick={() => showModal("AddEditModal")}
+            onClick={() => {
+              showModal("AddModal");
+            }}
           />
         </div>
         <div className="task-container">
           {taskList.map((task) => (
-            <TaskCard task={task} key={task.id} />
+            <TaskCard
+              task={task}
+              key={task.id}
+              showEditModal={() => showModal("EditModal")}
+              showDeleteModal={() => showModal("DeleteModal")}
+            />
           ))}
         </div>
       </div>
-      {showAddEditModal && <AddEditTaskModal close={closeModal} />}
-      {showDeleteModal && <DeleteModal />}
+      {showAddEditModal && (
+        <AddEditTaskModal
+          closeModal={() => closeModal("AddModal")}
+          mode={modeAddEditModal}
+        />
+      )}
+      {showDeleteModal && (
+        <DeleteModal closeModal={() => closeModal("DeleteModal")} />
+      )}
     </>
   );
 };

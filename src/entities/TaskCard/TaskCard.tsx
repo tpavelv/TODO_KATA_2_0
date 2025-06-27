@@ -7,6 +7,8 @@ import "./style.scss";
 
 export const TaskCard = ({
   task: { id, title, priority, status, progress },
+  showEditModal,
+  showDeleteModal,
 }) => {
   return (
     <div className="task-card">
@@ -33,8 +35,8 @@ export const TaskCard = ({
         />
       </div>
       <div className="actions">
-        <EditIcon className="mr-20 cp" onClick={() => {}} />
-        <DeleteIcon className="cp" onClick={() => {}} />
+        <EditIcon className="mr-20 cp" onClick={showEditModal} />
+        <DeleteIcon className="cp" onClick={showDeleteModal} />
       </div>
     </div>
   );
