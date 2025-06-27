@@ -8,24 +8,24 @@ import { taskList } from "../../app/serverData/taskList";
 import { useState } from "react";
 
 export const TodoList = () => {
-  const tasks;
+  // const tasks;
 
   type ModalName = "AddEditModal" | "showDeleteModal";
   const [showAddEditModal, setShowAddEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const setModalVisibility = (name, visible: boolean) => {
-    switch (name) {
-      case "AddEditModal":
-        setShowAddEditModal(visible);
-        break;
-      case "showDeleteModal":
-        setShowDeleteModal(visible);
-        break;
-      default:
-        break;
-    }
-  };
+  // const setModalVisibility = (name, visible: boolean) => {
+  //   switch (name) {
+  //     case "AddEditModal":
+  //       setShowAddEditModal(visible);
+  //       break;
+  //     case "showDeleteModal":
+  //       setShowDeleteModal(visible);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   const closeModal = (nameModal: string) => {
     switch (nameModal) {
