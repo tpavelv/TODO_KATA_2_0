@@ -9,3 +9,15 @@ export enum Status {
   PROGRESS = "progress", // В прогрессе
   DONE = "done", // Сделано
 }
+
+export const PriorityLabels = {
+  low: "Низкий",
+  medium: "Средний",
+  high: "Высокий",
+} as const;
+
+export const StatusLabels = {
+  todo: "Сделать",
+  progress: "В прогрессе",
+  done: "Сделано",
+} as const;

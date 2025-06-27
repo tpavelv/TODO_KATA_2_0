@@ -5,14 +5,14 @@ import { Input } from "../../shared/ui/Input";
 import { Modal } from "../../shared/ui/Modal";
 import "./style.scss";
 
-export const AddEditTaskModal = () => {
+export const AddEditTaskModal = ({ close }) => {
   return (
     <Modal>
       <form>
         <div className="add-edit-modal">
           <div className="flx-between">
             <span className="modal-title">Добавить задачу</span>
-            <Close className="cp" onClick={() => {}} />
+            <Close className="cp" onClick={close} />
           </div>
           <Input
             label="Задача"
