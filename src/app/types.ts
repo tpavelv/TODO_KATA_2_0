@@ -21,3 +21,17 @@ export const StatusLabels = {
   progress: "В прогрессе",
   done: "Сделано",
 } as const;
+
+export type Task = {
+  id: string;
+  title: string;
+  priority: Prioroty;
+  status: Status;
+  progress: number;
+};
+
+export enum ModalName {
+  ADD = "AddModal",
+  EDIT = "EditModal",
+  DELETE = "DeleteModal",
+}

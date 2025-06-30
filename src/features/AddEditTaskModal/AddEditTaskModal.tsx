@@ -3,11 +3,38 @@ import Close from "../../assets/icons/close.svg?react";
 import { Button } from "../../shared/ui/Button";
 import { Input } from "../../shared/ui/Input";
 import { Modal } from "../../shared/ui/Modal";
-import { PriorityLabels } from "../../app/types";
+import { PriorityLabels, Prioroty } from "../../app/types";
 import "./style.scss";
+import { useEffect, useState } from "react";
 
-export const AddEditTaskModal = ({ closeModal, mode }) => {
-  const title = mode === "add" ? "Добавить" : "Редактировать";
+export const AddEditTaskModal = ({
+  closeModal,
+  mode,
+  handleAdd,
+  handleEdit,
+  task,
+}) => {
+  const isAddMode = mode === "add";
+
+  const title = isAddMode ? "Добавить" : "Редактировать";
+  const [inputValue, setInputValue] = useState("");
+  const [priorityStatus, setPriorityStatus] = useState(Prioroty.HIGH);
+
+  useEffect(() => {
+    if (!isAddMode) {
+      setInputValue(task.title);
+      setPriorityStatus(task.priority);
+    }
+  }, [isAddMode, mode, task]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    isAddMode
+      ? handleAdd(inputValue, priorityStatus)
+      : handleEdit(task.id, inputValue, priorityStatus);
+    closeModal();
+  };
+
   return (
     <Modal>
       <form>
@@ -19,9 +46,11 @@ export const AddEditTaskModal = ({ closeModal, mode }) => {
           <Input
             label="Задача"
             placeholder="Введите текст.."
-            onChange={() => {}}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
             name="title"
-            value=""
+            value={inputValue}
           />
           <div className="modal-priority">
             <span>Приортитет</span>
@@ -29,7 +58,10 @@ export const AddEditTaskModal = ({ closeModal, mode }) => {
               {["high", "medium", "low"].map((priority) => (
                 <li
                   key={priority}
-                  className={classNames(`${priority}-selected`, priority)}
+                  className={classNames(priority, {
+                    [`${priority}-selected`]: priority === priorityStatus,
+                  })}
+                  onClick={() => setPriorityStatus(priority)}
                 >
                   {PriorityLabels[priority]}
                 </li>
@@ -37,12 +69,7 @@ export const AddEditTaskModal = ({ closeModal, mode }) => {
             </ul>
           </div>
           <div className="flx-right mt-50">
-            <Button
-              title={title}
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-            />
+            <Button title={title} onClick={handleSubmit} />
           </div>
         </div>
       </form>

@@ -2,14 +2,22 @@ import classNames from "classnames";
 import DeleteIcon from "../../assets/icons/delete.svg?react";
 import EditIcon from "../../assets/icons/edit.svg?react";
 import { CircularProgressBar } from "../../shared/ui/CircularProgressBar";
-import { PriorityLabels, StatusLabels } from "../../app/types";
+import { PriorityLabels, StatusLabels, Task } from "../../app/types";
 import "./style.scss";
+
+type TaskProps = {
+  task: Task;
+  showEditModal: () => void;
+  showDeleteModal: () => void;
+  setId: (id: string) => void;
+};
 
 export const TaskCard = ({
   task: { id, title, priority, status, progress },
   showEditModal,
   showDeleteModal,
-}) => {
+  setId,
+}: TaskProps) => {
   return (
     <div className="task-card">
       <div className="flex w-100">
@@ -35,8 +43,20 @@ export const TaskCard = ({
         />
       </div>
       <div className="actions">
-        <EditIcon className="mr-20 cp" onClick={showEditModal} />
-        <DeleteIcon className="cp" onClick={showDeleteModal} />
+        <EditIcon
+          className="mr-20 cp"
+          onClick={() => {
+            setId(id);
+            showEditModal();
+          }}
+        />
+        <DeleteIcon
+          className="cp"
+          onClick={() => {
+            setId(id);
+            showDeleteModal();
+          }}
+        />
       </div>
     </div>
   );

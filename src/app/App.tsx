@@ -5,7 +5,6 @@ const App = () => {
   return (
     <div className="container">
       <TodoList />
-      {/* <div>hello</div> */}
     </div>
   );
 };
