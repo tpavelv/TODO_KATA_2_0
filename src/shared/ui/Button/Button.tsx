@@ -7,14 +7,22 @@ type ButtonProps = {
   icon?: ReactNode;
   outline?: boolean;
   disabled?: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  type?: "button" | "submit" | "reset";
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const Button = ({ title, icon, outline, onClick }: ButtonProps) => {
+export const Button = ({
+  title,
+  icon,
+  outline,
+  onClick,
+  type,
+}: ButtonProps) => {
   return (
     <button
       className={classnames(outline && "outline", "button")}
       onClick={onClick}
+      type={type}
     >
       {icon && <span className="icon">{icon}</span>}
       {title}

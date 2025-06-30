@@ -35,3 +35,7 @@ export enum ModalName {
   EDIT = "EditModal",
   DELETE = "DeleteModal",
 }
+export enum Mode {
+  ADD = "add",
+  EDIT = "edit",
+}

@@ -3,9 +3,17 @@ import Close from "../../assets/icons/close.svg?react";
 import { Button } from "../../shared/ui/Button";
 import { Input } from "../../shared/ui/Input";
 import { Modal } from "../../shared/ui/Modal";
-import { PriorityLabels, Prioroty } from "../../app/types";
+import { PriorityLabels, Prioroty, Mode, Task } from "../../app/types";
 import "./style.scss";
 import { useEffect, useState } from "react";
+
+type AddEditTaskModalProps = {
+  closeModal: () => void;
+  mode: Mode;
+  handleAdd: (title: string, priority: Prioroty) => void;
+  handleEdit: (id: string, title: string, priority: Prioroty) => void;
+  task: Task;
+};
 
 export const AddEditTaskModal = ({
   closeModal,
@@ -13,7 +21,7 @@ export const AddEditTaskModal = ({
   handleAdd,
   handleEdit,
   task,
-}) => {
+}: AddEditTaskModalProps) => {
   const isAddMode = mode === "add";
 
   const title = isAddMode ? "Добавить" : "Редактировать";
@@ -27,17 +35,17 @@ export const AddEditTaskModal = ({
     }
   }, [isAddMode, mode, task]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     isAddMode
       ? handleAdd(inputValue, priorityStatus)
       : handleEdit(task.id, inputValue, priorityStatus);
     closeModal();
   };
-
+  const priorities: Prioroty[] = [Prioroty.HIGH, Prioroty.MEDIUM, Prioroty.LOW];
   return (
     <Modal>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="add-edit-modal">
           <div className="flx-between">
             <span className="modal-title">{`${title} задачу`}</span>
@@ -55,7 +63,7 @@ export const AddEditTaskModal = ({
           <div className="modal-priority">
             <span>Приортитет</span>
             <ul className="priority-buttons">
-              {["high", "medium", "low"].map((priority) => (
+              {priorities.map((priority) => (
                 <li
                   key={priority}
                   className={classNames(priority, {
@@ -69,7 +77,8 @@ export const AddEditTaskModal = ({
             </ul>
           </div>
           <div className="flx-right mt-50">
-            <Button title={title} onClick={handleSubmit} />
+            {/* <Button title={title} onClick={handleSubmit} /> */}
+            <Button title={title} type="submit" />
           </div>
         </div>
       </form>

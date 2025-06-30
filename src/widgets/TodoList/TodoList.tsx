@@ -6,24 +6,22 @@ import { DeleteModal } from "../../features/DeleteModal";
 import { TaskCard } from "../../entities/TaskCard";
 import { taskList } from "../../app/serverData/taskList";
 import { useRef, useState } from "react";
-import { Task, ModalName, Status, Prioroty } from "../../app/types";
+import { Task, ModalName, Status, Prioroty, Mode } from "../../app/types";
 
 export const TodoList = () => {
-  type Mode = "add" | "edit";
-
   const [showAddEditModal, setShowAddEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [modeAddEditModal, setModeAddEditModal] = useState<Mode>("add");
+  const [modeAddEditModal, setModeAddEditModal] = useState<Mode>(Mode.ADD);
   const [tasksData, setTasksData] = useState<Task[]>(taskList);
-  const [activeId, setActiveId] = useState(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const idCount = useRef(100);
 
   const setModalVisibility = (name: ModalName, visible: boolean) => {
     switch (name) {
       case ModalName.ADD:
-        if (modeAddEditModal !== "add") {
-          setModeAddEditModal("add");
+        if (modeAddEditModal !== Mode.ADD) {
+          setModeAddEditModal(Mode.ADD);
         }
 
         setShowAddEditModal(visible);
@@ -31,8 +29,8 @@ export const TodoList = () => {
         break;
 
       case ModalName.EDIT:
-        if (modeAddEditModal !== "edit") {
-          setModeAddEditModal("edit");
+        if (modeAddEditModal !== Mode.EDIT) {
+          setModeAddEditModal(Mode.EDIT);
         }
 
         setShowAddEditModal(visible);
@@ -64,17 +62,17 @@ export const TodoList = () => {
     };
   };
 
-  const addTask = (title, priority: Prioroty) => {
+  const addTask = (title: string, priority: Prioroty) => {
     const newTask = createTask(title, priority);
 
     setTasksData((prev) => [...prev, newTask]);
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = (id: string | null) => {
     setTasksData((prevData) => prevData.filter((task) => task.id !== id));
   };
 
-  const editTask = (id, title, priority) => {
+  const editTask = (id: string, title: string, priority: Prioroty) => {
     setTasksData((prevData) =>
       prevData.map((task) =>
         task.id === id ? { ...task, title, priority } : task
@@ -82,7 +80,7 @@ export const TodoList = () => {
     );
   };
 
-  const findActiveTask = (arr, id) => {
+  const findActiveTask = (arr: Task[], id: string | null) => {
     return arr.filter((task) => task.id === id)[0];
   };
 
@@ -115,8 +113,8 @@ export const TodoList = () => {
         <AddEditTaskModal
           closeModal={() => closeModal(ModalName.ADD)}
           mode={modeAddEditModal}
-          handleAdd={(...args) => addTask(...args)}
-          handleEdit={(...args) => editTask(...args)}
+          handleAdd={addTask}
+          handleEdit={editTask}
           task={findActiveTask(tasksData, activeId)}
         />
       )}
