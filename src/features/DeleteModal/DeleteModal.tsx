@@ -1,6 +1,6 @@
 import { Button } from "../../shared/ui/Button";
 import { Modal } from "../../shared/ui/Modal";
-import "./style.scss";
+import styles from "./style.module.scss";
 
 type DeleteModalProps = {
   closeModal: () => void;
@@ -15,9 +15,9 @@ export const DeleteModal = ({
 }: DeleteModalProps) => {
   return (
     <Modal>
-      <div className="delete-modal">
+      <div className={styles["delete-modal"]}>
         <p>Точно удалить задачу?</p>
-        <div className="delete-modal__actions">
+        <div className={styles["delete-modal__actions"]}>
           <Button
             title="Удалить"
             onClick={() => {

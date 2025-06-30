@@ -4,7 +4,9 @@ import { Button } from "../../shared/ui/Button";
 import { Input } from "../../shared/ui/Input";
 import { Modal } from "../../shared/ui/Modal";
 import { PriorityLabels, Prioroty, Mode, Task } from "../../app/types";
-import "./style.scss";
+// import "./style.scss";
+import styles from "./style.module.scss";
+
 import { useEffect, useState } from "react";
 
 type AddEditTaskModalProps = {
@@ -46,9 +48,9 @@ export const AddEditTaskModal = ({
   return (
     <Modal>
       <form onSubmit={handleSubmit}>
-        <div className="add-edit-modal">
+        <div className={styles["add-edit-modal"]}>
           <div className="flx-between">
-            <span className="modal-title">{`${title} задачу`}</span>
+            <span className={styles["modal-title"]}>{`${title} задачу`}</span>
             <Close className="cp" onClick={closeModal} />
           </div>
           <Input
@@ -60,14 +62,15 @@ export const AddEditTaskModal = ({
             name="title"
             value={inputValue}
           />
-          <div className="modal-priority">
+          <div className={styles["modal-priority"]}>
             <span>Приортитет</span>
-            <ul className="priority-buttons">
+            <ul className={styles["priority-buttons"]}>
               {priorities.map((priority) => (
                 <li
                   key={priority}
-                  className={classNames(priority, {
-                    [`${priority}-selected`]: priority === priorityStatus,
+                  className={classNames(styles[priority], {
+                    [styles[`${priority}-selected`]]:
+                      priority === priorityStatus,
                   })}
                   onClick={() => setPriorityStatus(priority)}
                 >
