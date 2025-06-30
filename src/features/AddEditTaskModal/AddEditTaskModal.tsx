@@ -77,7 +77,6 @@ export const AddEditTaskModal = ({
             </ul>
           </div>
           <div className="flx-right mt-50">
-            {/* <Button title={title} onClick={handleSubmit} /> */}
             <Button title={title} type="submit" />
           </div>
         </div>

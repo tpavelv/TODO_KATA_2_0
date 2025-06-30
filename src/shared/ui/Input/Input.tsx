@@ -1,5 +1,4 @@
-import './style.scss';
-
+import styles from "./style.module.scss";
 interface InputProps {
   label: string;
   placeholder: string;
@@ -8,9 +7,15 @@ interface InputProps {
   value: string;
 }
 
-export const Input = ({ label, placeholder, onChange, name, value }: InputProps) => {
+export const Input = ({
+  label,
+  placeholder,
+  onChange,
+  name,
+  value,
+}: InputProps) => {
   return (
-    <div className="input">
+    <div className={styles.input}>
       <label htmlFor="">{label}</label>
       <input
         type="text"

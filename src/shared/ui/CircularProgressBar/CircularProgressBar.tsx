@@ -1,28 +1,36 @@
-import "./style.scss"
-
+import styles from "./style.module.scss";
 interface Props {
-  strokeWidth: number
-  sqSize: number
-  percentage?: number
+  strokeWidth: number;
+  sqSize: number;
+  percentage?: number;
 }
 
-export const CircularProgressBar = ({ strokeWidth, sqSize, percentage }: Props) => {
-  const radius = (sqSize - strokeWidth) / 2
-  const viewBox = `0 0 ${sqSize} ${sqSize}`
-  const dashArray = radius * Math.PI * 2
-  const dashOffset = dashArray - (dashArray * (percentage || 0)) / 100
+export const CircularProgressBar = ({
+  strokeWidth,
+  sqSize,
+  percentage,
+}: Props) => {
+  const radius = (sqSize - strokeWidth) / 2;
+  const viewBox = `0 0 ${sqSize} ${sqSize}`;
+  const dashArray = radius * Math.PI * 2;
+  const dashOffset = dashArray - (dashArray * (percentage || 0)) / 100;
 
   return (
-    <svg width={sqSize} height={sqSize} viewBox={viewBox} className="circular-progressbar">
+    <svg
+      width={sqSize}
+      height={sqSize}
+      viewBox={viewBox}
+      className={styles["circular-progressbar"]}
+    >
       <circle
-        className="circle-background"
+        className={styles["circle-background"]}
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
       <circle
-        className="circle-progress"
+        className={styles["circle-progress"]}
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}
@@ -34,5 +42,5 @@ export const CircularProgressBar = ({ strokeWidth, sqSize, percentage }: Props) 
         }}
       />
     </svg>
-  )
-}
+  );
+};

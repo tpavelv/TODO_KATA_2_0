@@ -1,4 +1,5 @@
-import "./style.scss";
+import styles from "./style.module.scss";
+
 import Add from "../../assets/icons/add.svg?react";
 import { AddEditTaskModal } from "../../features/AddEditTaskModal";
 import { Button } from "../../shared/ui/Button";
@@ -86,8 +87,8 @@ export const TodoList = () => {
 
   return (
     <>
-      <div className="page-wrapper">
-        <div className="top-title">
+      <div className={styles["page-wrapper"]}>
+        <div className={styles["top-title"]}>
           <h2>Список задач</h2>
           <Button
             title="Добавить задачу"
@@ -97,7 +98,7 @@ export const TodoList = () => {
             }}
           />
         </div>
-        <div className="task-container">
+        <div className={styles["task-container"]}>
           {tasksData.map((task) => (
             <TaskCard
               task={task}
