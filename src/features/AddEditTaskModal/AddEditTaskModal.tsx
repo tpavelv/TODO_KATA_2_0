@@ -4,7 +4,7 @@ import { Button } from "../../shared/ui/Button";
 import { Input } from "../../shared/ui/Input";
 import { Modal } from "../../shared/ui/Modal";
 import { PriorityLabels, Prioroty, Mode, Task } from "../../app/types";
-// import "./style.scss";
+
 import styles from "./style.module.scss";
 
 import { useEffect, useState } from "react";
