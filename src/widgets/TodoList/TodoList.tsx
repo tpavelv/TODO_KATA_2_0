@@ -1,52 +1,37 @@
-import styles from "./style.module.scss";
-
-import Add from "../../assets/icons/add.svg?react";
 import { AddEditTaskModal } from "../../features/AddEditTaskModal";
-import { Button } from "../../shared/ui/Button";
 import { DeleteModal } from "../../features/DeleteModal";
-import { TaskCard } from "../../entities/TaskCard";
 import { taskList } from "../../app/serverData/taskList";
 import { useRef, useState } from "react";
-import { Task, ModalName, Status, Prioroty, Mode } from "../../app/types";
+import { Task, ModalName, Status, Prioroty } from "../../app/types";
+import { TodoListView } from "./TodoListView";
 
 export const TodoList = () => {
-  const [showAddEditModal, setShowAddEditModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [modeAddEditModal, setModeAddEditModal] = useState<Mode>(Mode.ADD);
+  const [showModal, setShowModal] = useState<ModalName | null>(null);
   const [tasksData, setTasksData] = useState<Task[]>(taskList);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const idCount = useRef(100);
 
-  const setModalVisibility = (name: ModalName, visible: boolean) => {
+  const onShowModal = (name: ModalName) => {
     switch (name) {
       case ModalName.ADD:
-        if (modeAddEditModal !== Mode.ADD) {
-          setModeAddEditModal(Mode.ADD);
-        }
-
-        setShowAddEditModal(visible);
-
+        setShowModal(ModalName.ADD);
         break;
 
       case ModalName.EDIT:
-        if (modeAddEditModal !== Mode.EDIT) {
-          setModeAddEditModal(Mode.EDIT);
-        }
-
-        setShowAddEditModal(visible);
+        setShowModal(ModalName.EDIT);
         break;
 
       case ModalName.DELETE:
-        setShowDeleteModal(visible);
+        setShowModal(ModalName.DELETE);
         break;
       default:
         break;
     }
   };
-
-  const showModal = (name: ModalName) => setModalVisibility(name, true);
-  const closeModal = (name: ModalName) => setModalVisibility(name, false);
+  const onCloseModal = () => {
+    setShowModal(null);
+  };
 
   const createTask = (
     title: string,
@@ -87,45 +72,31 @@ export const TodoList = () => {
 
   return (
     <>
-      <div className={styles["page-wrapper"]}>
-        <div className={styles["top-title"]}>
-          <h2>Список задач</h2>
-          <Button
-            title="Добавить задачу"
-            icon={<Add />}
-            onClick={() => {
-              showModal(ModalName.ADD);
-            }}
-          />
-        </div>
-        <div className={styles["task-container"]}>
-          {tasksData.map((task) => (
-            <TaskCard
-              task={task}
-              key={task.id}
-              showEditModal={() => showModal(ModalName.EDIT)}
-              showDeleteModal={() => showModal(ModalName.DELETE)}
-              setId={(id) => setActiveId(id)}
-            />
-          ))}
-        </div>
-      </div>
-      {showAddEditModal && (
+      <TodoListView
+        tasks={tasksData}
+        onOpenAddModal={() => {
+          onShowModal(ModalName.ADD);
+        }}
+        onOpenEditModal={() => onShowModal(ModalName.EDIT)}
+        onOpenDeleteModal={() => onShowModal(ModalName.DELETE)}
+        setActiveId={setActiveId}
+      />
+
+      {showModal === ModalName.DELETE && (
+        <DeleteModal
+          id={activeId}
+          closeModal={onCloseModal}
+          deleteTask={deleteTask}
+        />
+      )}
+
+      {(showModal === ModalName.ADD || showModal === ModalName.EDIT) && (
         <AddEditTaskModal
-          closeModal={() => closeModal(ModalName.ADD)}
-          mode={modeAddEditModal}
+          closeModal={onCloseModal}
+          mode={showModal}
           handleAdd={addTask}
           handleEdit={editTask}
           task={findActiveTask(tasksData, activeId)}
-        />
-      )}
-      {showDeleteModal && (
-        <DeleteModal
-          id={activeId}
-          closeModal={() => closeModal(ModalName.DELETE)}
-          deleteTask={(id) => {
-            deleteTask(id);
-          }}
         />
       )}
     </>

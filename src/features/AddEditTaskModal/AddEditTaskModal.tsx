@@ -1,17 +1,11 @@
-import classNames from "classnames";
-import Close from "../../assets/icons/close.svg?react";
-import { Button } from "../../shared/ui/Button";
-import { Input } from "../../shared/ui/Input";
-import { Modal } from "../../shared/ui/Modal";
-import { PriorityLabels, Prioroty, Mode, Task } from "../../app/types";
-
-import styles from "./style.module.scss";
+import { Prioroty, Task, ModalName } from "../../app/types";
+import { AddEditTaskModalView } from "./AddEditTaskModalView";
 
 import { useEffect, useState } from "react";
 
 type AddEditTaskModalProps = {
   closeModal: () => void;
-  mode: Mode;
+  mode: ModalName;
   handleAdd: (title: string, priority: Prioroty) => void;
   handleEdit: (id: string, title: string, priority: Prioroty) => void;
   task: Task;
@@ -24,8 +18,7 @@ export const AddEditTaskModal = ({
   handleEdit,
   task,
 }: AddEditTaskModalProps) => {
-  const isAddMode = mode === "add";
-
+  const isAddMode = mode === ModalName.ADD;
   const title = isAddMode ? "Добавить" : "Редактировать";
   const [inputValue, setInputValue] = useState("");
   const [priorityStatus, setPriorityStatus] = useState(Prioroty.HIGH);
@@ -44,46 +37,26 @@ export const AddEditTaskModal = ({
       : handleEdit(task.id, inputValue, priorityStatus);
     closeModal();
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleChangePriorityStatus = (value: Prioroty) => {
+    setPriorityStatus(value);
+  };
+
   const priorities: Prioroty[] = [Prioroty.HIGH, Prioroty.MEDIUM, Prioroty.LOW];
   return (
-    <Modal>
-      <form onSubmit={handleSubmit}>
-        <div className={styles["add-edit-modal"]}>
-          <div className="flx-between">
-            <span className={styles["modal-title"]}>{`${title} задачу`}</span>
-            <Close className="cp" onClick={closeModal} />
-          </div>
-          <Input
-            label="Задача"
-            placeholder="Введите текст.."
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
-            name="title"
-            value={inputValue}
-          />
-          <div className={styles["modal-priority"]}>
-            <span>Приортитет</span>
-            <ul className={styles["priority-buttons"]}>
-              {priorities.map((priority) => (
-                <li
-                  key={priority}
-                  className={classNames(styles[priority], {
-                    [styles[`${priority}-selected`]]:
-                      priority === priorityStatus,
-                  })}
-                  onClick={() => setPriorityStatus(priority)}
-                >
-                  {PriorityLabels[priority]}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flx-right mt-50">
-            <Button title={title} type="submit" />
-          </div>
-        </div>
-      </form>
-    </Modal>
+    <AddEditTaskModalView
+      onSubmit={handleSubmit}
+      onClose={closeModal}
+      onChange={handleInputChange}
+      onPriorityChange={handleChangePriorityStatus}
+      title={title}
+      inputValue={inputValue}
+      priorityStatus={priorityStatus}
+      priorities={priorities}
+    />
   );
 };
