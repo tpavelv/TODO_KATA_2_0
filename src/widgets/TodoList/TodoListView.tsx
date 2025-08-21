@@ -7,17 +7,8 @@ import { Task } from "../../app/types";
 type TodoListViewProps = {
   tasks: Task[];
   onOpenAddModal: () => void;
-  onOpenEditModal: () => void;
-  onOpenDeleteModal: () => void;
-  setActiveId: (id: string) => void;
 };
-export const TodoListView = ({
-  tasks,
-  onOpenAddModal,
-  onOpenEditModal,
-  onOpenDeleteModal,
-  setActiveId,
-}: TodoListViewProps) => {
+export const TodoListView = ({ tasks, onOpenAddModal }: TodoListViewProps) => {
   return (
     <>
       <div className={styles["page-wrapper"]}>
@@ -31,13 +22,7 @@ export const TodoListView = ({
         </div>
         <div className={styles["task-container"]}>
           {tasks.map((task) => (
-            <TaskCard
-              task={task}
-              key={task.id}
-              showEditModal={onOpenEditModal}
-              showDeleteModal={onOpenDeleteModal}
-              setId={setActiveId}
-            />
+            <TaskCard task={task} key={task.id} />
           ))}
         </div>
       </div>
