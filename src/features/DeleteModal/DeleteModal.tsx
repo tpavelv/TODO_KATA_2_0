@@ -1,4 +1,4 @@
-import { useTypedDispatch, useTypedSelector } from "../../hooks.ts/redux";
+import { useTypedDispatch } from "../../hooks.ts/redux";
 import { deleteTask, onCloseModal } from "../../reducers/TodoSlice";
 import { DeleteModalView } from "./DeleteModalView";
 

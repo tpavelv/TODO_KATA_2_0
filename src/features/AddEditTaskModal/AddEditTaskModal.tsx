@@ -1,4 +1,4 @@
-import { Prioroty, Task, ModalName, Status } from "../../app/types";
+import { Prioroty, ModalName, Status } from "../../app/types";
 import { useTypedDispatch, useTypedSelector } from "../../hooks.ts/redux";
 import { onCloseModal, addTask, editTask } from "../../reducers/TodoSlice";
 import { AddEditTaskModalView } from "./AddEditTaskModalView";
