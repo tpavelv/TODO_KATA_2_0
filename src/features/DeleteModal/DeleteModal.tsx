@@ -1,20 +1,17 @@
+import { useTypedDispatch, useTypedSelector } from "../../hooks.ts/redux";
+import { deleteTask, onCloseModal } from "../../reducers/TodoSlice";
 import { DeleteModalView } from "./DeleteModalView";
 
-type DeleteModalProps = {
-  closeModal: () => void;
-  deleteTask: (id: string | null) => void;
-  id: string | null;
-};
+export const DeleteModal = () => {
+  const dispatch = useTypedDispatch();
 
-export const DeleteModal = ({
-  closeModal,
-  deleteTask,
-  id,
-}: DeleteModalProps) => {
   const handleDelete = () => {
-    deleteTask(id);
-    closeModal();
+    dispatch(deleteTask());
   };
 
-  return <DeleteModalView onDelete={handleDelete} onClose={closeModal} />;
+  const handleClose = () => {
+    dispatch(onCloseModal());
+  };
+
+  return <DeleteModalView onDelete={handleDelete} onClose={handleClose} />;
 };

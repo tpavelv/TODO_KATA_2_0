@@ -1,13 +1,5 @@
 import { Prioroty, Status, Task } from "../types";
 
-// export type Task = {
-//   id: string;
-//   title: string;
-//   priority: Prioroty;
-//   status: Status;
-//   progress: number;
-// };
-
 export const taskList: Array<Task> = [
   {
     id: "01",
